@@ -89,3 +89,4 @@ Thumbs.db
 *~
 *.tmp
 *.bak
+!docs/images/*.png
