@@ -1,0 +1,91 @@
+# Python кэши и виртуальные окружения
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter и IPynb
+.ipynb_checkpoints
+*.ipynb
+
+# Логи и базы данных
+*.log
+*.sql
+*.sqlite
+*.db
+*.sqlite3
+
+# Тяжёлые данные и датасеты
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.h5
+*.hdf5
+data/
+datasets/
+raw_data/
+
+# Графики и выходные файлы симуляций (если не хочешь коммитить каждый plot)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+plots/
+output/
+results/
+
+# LTSpice и симуляции
+*.raw
+*.log
+*.net
+*.plt
+*.fft
+*.op.raw
+
+# Embedded и компиляция
+*.o
+*.elf
+*.bin
+*.hex
+*.out
+*.map
+build/
+dist/
+*.su
+
+# Docker (если не хочешь коммитить локальные образы или кэши)
+.docker/
+Dockerfile.*
+docker-compose*.yml
+
+# ОС и редакторы
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Временные файлы
+*~
+*.tmp
+*.bak
