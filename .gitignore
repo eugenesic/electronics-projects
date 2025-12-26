@@ -1,92 +1,106 @@
-# Python кэши и виртуальные окружения
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+# ==============================================================================
+# STM32CubeMX / STM32CubeIDE / STM32CubeF4 generated files
+# ==============================================================================
 
-# Jupyter и IPynb
-.ipynb_checkpoints
-*.ipynb
+# IDE project files (Eclipse-based CubeIDE)
+.cproject
+.project
+.settings/
+.mxproject
 
-# Логи и базы данных
-*.log
-*.sql
-*.sqlite
-*.db
-*.sqlite3
+# Build directories
+/Debug/
+/Release/
+/Build/
+/Objects/
 
-# Тяжёлые данные и датасеты
-*.csv
-*.tsv
-*.xlsx
-*.xls
-*.parquet
-*.h5
-*.hdf5
-data/
-datasets/
-raw_data/
+# Generated Drivers and Middleware from STM32CubeF4 package
+# (НЕ коммитим — они огромные и скачиваются из CubeFW)
+Drivers/
+Middlewares/
 
-# Графики и выходные файлы симуляций (если не хочешь коммитить каждый plot)
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.pdf
-plots/
-output/
-results/
+# Generated code directories (кроме твоего кода в Core)
+Inc/
+Src/
+Startup/
 
-# LTSpice и симуляции
-*.raw
-*.log
-*.net
-*.plt
-*.fft
-*.op.raw
+# Исключение: оставляем только твои файлы в Core (если пишешь вручную)
+# !Core/Src/main.c
+# !Core/Src/*.c
+# !Core/Inc/*.h
+# (или просто коммить Core целиком, если весь код твой)
 
-# Embedded и компиляция
-*.o
+# Linker scripts и startup (если генерируются автоматически — не коммитим)
+# *.ld
+# startup_*.s
+# Если ты их кастомизируешь — раскомментируй и коммить:
+!*.ld
+!startup_*.s
+
+# ==============================================================================
+# Build artifacts
+# ==============================================================================
 *.elf
-*.bin
+*.axf
 *.hex
-*.out
+*.bin
 *.map
-build/
-dist/
+*.lst
+*.o
+*.d
 *.su
+*.a
+*.lib
 
-# Docker (если не хочешь коммитить локальные образы или кэши)
-.docker/
-Dockerfile.*
-docker-compose*.yml
+# ==============================================================================
+# STM32CubeMX configuration
+# ==============================================================================
+# .ioc — ЭТО ОБЯЗАТЕЛЬНО коммитим! Это "исходник" проекта
+# Без него никто не сможет сгенерировать код заново
+# *.ioc — НЕ игнорируем
+*.ioc
 
-# ОС и редакторы
-.DS_Store
-Thumbs.db
-.idea/
+# ==============================================================================
+# IDE-specific
+# ==============================================================================
+# STM32CubeIDE
+*.launch
+*.prefs
+
+# EWARM / Keil / IAR (если вдруг)
+*.eww
+*.ewp
+*.ewd
+*.uvprojx
+*.uvoptx
+
+# VS Code (если используешь)
 .vscode/
-*.swp
-*.swo
+*.code-workspace
 
-# Временные файлы
-*~
+# ==============================================================================
+# Temporary / cache files
+# ==============================================================================
 *.tmp
 *.bak
-!docs/images/*.png
+*.swp
+*~
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Cache directories
+.cache/
+.matplotlib/
+
+# ==============================================================================
+# Optional: если используешь CMake вместо Makefile
+# ==============================================================================
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+
+# STM32CubeF4 package — полностью игнорируем (это внешний репозиторий)
+STM32CubeF4/
