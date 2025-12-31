@@ -6,7 +6,6 @@ from PySpice.Unit import *
 def create_pi_filter(L_val, C1_val, C2_val, R_load=50):
     circuit = Circuit('EMC Pi-Filter Optimization')
     
-    # Входное напряжение. Изменили 'in' на 'node_in'
     circuit.SinusoidalVoltageSource('input', 'node_in', circuit.gnd, amplitude=1@u_V)
     
     # Сопротивление источника
