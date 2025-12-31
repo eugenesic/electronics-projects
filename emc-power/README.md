@@ -1,120 +1,96 @@
 # AI-Driven EMC Filter Optimizer ⚡🛡️
 
-A professional tool for automatic design and optimization of power Electromagnetic Compatibility (EMC) filters using SPICE simulation and numerical optimization algorithms.
+Professional tool for automated synthesis and optimization of power EMI filters using SPICE-level simulation and numerical optimization.
 
 ## 📌 Overview
 
-This project automates the selection of optimal component values for a Pi-filter () to suppress differential mode noise. Unlike basic online calculators, this optimizer accounts for real-world physical constraints and varying operational conditions.
+This project automates the design of industrial EMC filters, balancing the suppression of **Differential Mode (DM)** and **Common Mode (CM)** noise. Unlike basic models, the V5.2 optimizer uses a **Common Mode Choke (CMC)** with a realistic coupling coefficient () to utilize leakage inductance for DM filtering, significantly reducing component count.
 
-### Key Features (V4 Final):
+### Key Features (V5.2 Industrial):
 
-* **SPICE-Driven:** Powered by the `NgSpice` engine via the `PySpice` library for high-fidelity circuit analysis.
-* **Realistic Modeling:** Includes parasitic parameters: **ESR** (Equivalent Series Resistance), **ESL** (Equivalent Series Inductance), and coil **DCR** (DC Resistance).
-* **Smart Optimization:** Utilizes the Nelder-Mead algorithm (`SciPy`) with a custom penalty function to minimize physical footprint.
-* **Stability Check:** Guarantees target attenuation (e.g., -60 dB) across different load impedances: from no-load (50 Ohm) to heavy-load (10 Ohm) scenarios.
-* **Design for Manufacturing (DFM):** Automatically snaps calculated values to standard industrial **E24** series components.
+* **Dual-Mode Optimization:** Simultaneously optimizes DM and CM attenuation targets (default -60 dB).
+* **Leakage Inductance Modeling:** Uses CMC leakage () instead of separate bulky DM inductors.
+* **Safety-First Design:** Implements a strict constraint on **Leakage Current** (max 3.5 mA) by limiting Y-capacitor values () according to international safety standards (230V/50Hz).
+* **Thermal Awareness:** Calculates static power losses based on real DC Resistance (**DCR**) of the windings at high load currents (up to 10A+).
+* **Design for Manufacturing (DFM):** Snaps all calculated values to the standard industrial **E24** series.
+* **Visual Analytics:** Generates professional Bode plots showing the performance of both noise modes from 10 kHz to 30 MHz.
 
 ---
 
 ## 🛠️ How It Works
 
-The optimization process follows three main stages:
+1. **SPICE Simulation:** The tool builds a dynamic netlist in `NgSpice` for two separate test circuits (DM and CM).
+2. **Constraint-Based Optimization:** The Nelder-Mead algorithm explores the parameter space () with a complex penalty function:
+* **Penalty 1:** Violation of -60 dB attenuation target.
+* **Penalty 2:** Exceeding 3.5 mA leakage current (Safety Limit).
+* **Penalty 3:** Component physical footprint (prioritizing inductor minimization).
 
-1. **Mathematical Search:** The algorithm finds "ideal"  and  values, minimizing size while maintaining the attenuation threshold.
-2. **Stability Verification:** Simulation is repeated for low-impedance loads to ensure no resonance peaks amplify the noise.
-3. **Quantization:** The program selects the nearest real-world components and performs a final verification to ensure rounding didn't violate the specs.
 
----
-
-## 🚀 Quick Start
-
-### Requirements
-
-* Docker (Recommended) or local `NgSpice` installation.
-* Python 3.10+
-* Libraries: `pyspice`, `scipy`, `numpy`, `matplotlib`.
-
-### Execution
-
-Run the optimizer:
-
-```bash
-python emc_optimizer_v4.py
-
-```
+3. **Real-World Snap:** Rounds results to E24 and performs a final "as-built" verification.
 
 ---
 
-## 📊 Sample Output
+## 📊 Performance Analysis
 
-The program generates a console report and an Frequency Response (Bode plot):
+The transition from V4 to V5.2 represents a shift from theoretical Pi-filters to industrial-grade topology:
 
-| Component | Calculated Value | Selected E24 Value |
+| Feature | V4 (Pi-Filter) | V5.2 (CMC-based) |
 | --- | --- | --- |
-| **L (Inductance)** | 4.534 uH | **4.700 uH** |
-| **C1 (Capacitor)** | 1.696 uF | **1.600 uF** |
-| **C2 (Capacitor)** | 1.074 uF | **1.100 uF** |
-
-**Final Status:** `SPEC MET ✅`
-
-**Attenuation (10 Ohm):** `-60.44 dB`
+| **Noise Type** | Differential Only | **DM + Common Mode** |
+| **Main Component** | Separate L-inductor | **Common Mode Choke** |
+| **Safety Check** | None | **Leakage Current Control** |
+| **Damping** | Ideal/Generic | **Real DCR (mOhm)** |
 
 ---
 
 # AI-Driven EMC Filter Optimizer (RU) ⚡🛡️
 
-Профессиональный инструмент для автоматического проектирования и оптимизации силовых фильтров электромагнитной совместимости (ЭМС) с использованием SPICE-моделирования и алгоритмов численной оптимизации.
+Инструмент профессионального уровня для автоматизированного синтеза и оптимизации силовых ЭМС-фильтров с использованием SPICE-моделирования.
 
 ## 📌 Описание
 
-Проект решает задачу подбора оптимальных номиналов компонентов П-фильтра () для подавления дифференциальных помех. В отличие от простых калькуляторов, данный оптимизатор учитывает реальные физические ограничения и условия эксплуатации.
+Проект автоматизирует проектирование промышленных фильтров, обеспечивая одновременное подавление **дифференциальных (DM)** и **синфазных (CM)** помех. Версия 5.2 использует модель **синфазного дросселя (CMC)** с реалистичным коэффициентом связи (), что позволяет использовать индуктивность рассеяния для фильтрации DM-помех без установки дополнительных катушек.
 
-### Ключевые особенности (V4 Final):
+### Ключевые особенности (V5.2 Industrial):
 
-* **SPICE-Driven:** Использование движка `NgSpice` через библиотеку `PySpice` для точного анализа цепей.
-* **Realistic Modeling:** Учет паразитных параметров компонентов: **ESR** (последовательное сопротивление), **ESL** (индуктивность выводов) и **DCR** катушки.
-* **Smart Optimization:** Алгоритм Нелдера-Мида (`SciPy`) с функцией штрафа за габариты компонентов.
-* **Stability Check:** Гарантированное затухание (напр. -60 дБ) в разных режимах нагрузки: от холостого хода (50 Ом) до сильно нагруженной линии (10 Ом).
-* **Design for Manufacturing (DFM):** Автоматическое приведение расчетных значений к стандартному промышленному ряду номиналов **E24**.
-
----
-
-## 🛠️ Как это работает
-
-Процесс оптимизации разделен на три этапа:
-
-1. **Математический поиск:** Алгоритм ищет идеальные значения  и , минимизируя габариты при соблюдении порога затухания.
-2. **Проверка стабильности:** Симуляция повторяется для низкого импеданса нагрузки, чтобы исключить возникновение резонансных пиков, усиливающих помеху.
-3. **Квантование:** Программа подбирает ближайшие реальные компоненты и делает финальную верификацию, чтобы убедиться, что округление не нарушило требования ТЗ.
+* **Комплексная оптимизация:** Одновременный подбор параметров для DM и CM режимов (целевое затухание -60 дБ).
+* **Модель индуктивности рассеяния:** Интеллектуальное использование паразитных параметров дросселя для экономии места на плате.
+* **Контроль электробезопасности:** Жесткое ограничение **тока утечки** (макс. 3.5 мА) через лимит емкости Y-конденсаторов () для сетей 230В/50Гц.
+* **Тепловой расчет:** Учет статических потерь мощности на активном сопротивлении обмоток (**DCR**) при токах до 10А и выше.
+* **Готовность к производству (DFM):** Квантование номиналов по стандартному промышленному ряду **E24**.
+* **Визуализация:** Автоматическая генерация графиков АЧХ в диапазоне 10 кГц — 30 МГц.
 
 ---
 
-## 🚀 Быстрый запуск
+## 🚀 Быстрый запуск / Quick Start
 
-### Требования
+### Requirements
 
-* Docker (рекомендуется) или установленный `NgSpice`.
 * Python 3.10+
-* Библиотеки: `pyspice`, `scipy`, `numpy`, `matplotlib`.
+* `pyspice`, `scipy`, `numpy`, `matplotlib`
+* `NgSpice` (or Docker with PySpice image)
 
-### Запуск
+### Execution
 
 ```bash
-python emc_optimizer_v4.py
+python emc_optimizer_v5.py
 
 ```
 
+## 📈 Результаты работы (Sample Report)
+
+| Компонент | Номинал E24 | Роль в схеме |
+| --- | --- | --- |
+| **Cx (X-Capacitor)** | **6.200 uF** | Подавление дифференциальной помехи |
+| **Lcm (CM Choke)** | **20.000 mH** | Основной фильтр синфазной помехи |
+| **Cy (Y-Capacitor)** | **27.000 nF** | Слив синфазного тока на заземление |
+
+**Статус:** `✅ Расчет завершен успешно`
+**Затухание (150 кГц):** DM: `-61.94 dB`, CM: `-59.61 dB`
+**Потери мощности (10A):** `1.00 W`
+
 ---
 
-## 📈 Планы развития
-
-* [x] Оптимизация П-фильтра дифференциальных помех.
-* [x] Автоподбор номиналов ряда E24.
-* [ ] Добавление модели синфазного дросселя (Common Mode Choke).
-* [ ] Расчет тепловых потерь на DCR катушки.
-
----
-
-**Developed for emc-power project**
+**Developed for emc-power project. Engineering-grade EMI suppression.**
 
 ---
